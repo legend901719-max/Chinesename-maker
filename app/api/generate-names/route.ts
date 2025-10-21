@@ -39,6 +39,10 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
     const generatedContent = data.choices[0].message.content;
     
+    // 添加调试日志
+    console.log('DeepSeek API响应:', JSON.stringify(data, null, 2));
+    console.log('生成的原始内容:', generatedContent);
+    
     // 解析生成的姓名数据
     const names = parseGeneratedNames(generatedContent);
     
@@ -117,27 +121,58 @@ function buildPrompt(englishName: string, gender: string, nationality: string, m
 
 function parseGeneratedNames(content: string): any[] {
   try {
+    console.log('开始解析内容:', content.substring(0, 200) + '...');
+    
     // 尝试提取JSON部分
     const jsonMatch = content.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
       let jsonStr = jsonMatch[0];
+      console.log('提取的JSON字符串:', jsonStr.substring(0, 200) + '...');
       
       // 清理JSON字符串，移除可能的格式问题
       jsonStr = jsonStr
         .replace(/\n/g, ' ')  // 移除换行符
         .replace(/\s+/g, ' ')  // 合并多个空格
         .replace(/,\s*}/g, '}')  // 移除尾随逗号
-        .replace(/,\s*]/g, ']');  // 移除数组尾随逗号
+        .replace(/,\s*]/g, ']')  // 移除数组尾随逗号
+        .replace(/\s*,\s*}/g, '}')  // 移除对象尾随逗号
+        .replace(/\s*,\s*]/g, ']');  // 移除数组尾随逗号
+      
+      console.log('清理后的JSON:', jsonStr.substring(0, 200) + '...');
       
       const parsed = JSON.parse(jsonStr);
+      console.log('解析成功，找到姓名数量:', parsed.names?.length || 0);
+      
+      // 检查并修复字符数组格式
+      if (parsed.names) {
+        parsed.names.forEach((name: any, index: number) => {
+          if (name.characters && Array.isArray(name.characters)) {
+            name.characters = name.characters.map((char: any) => {
+              // 如果字符是对象格式，转换为正确格式
+              if (typeof char === 'object' && char.char) {
+                return {
+                  char: char.char,
+                  meaning: char.meaning || '',
+                  origin: char.origin || '',
+                  explanation: char.explanation || ''
+                };
+              }
+              return char;
+            });
+          }
+        });
+      }
+      
       return parsed.names || [];
     }
     
-    // 如果没有找到JSON，返回默认数据
+    console.log('未找到JSON格式，使用默认数据');
     return getDefaultNames();
   } catch (error) {
     console.error('解析生成的姓名时出错:', error);
-    console.error('原始内容:', content.substring(0, 500));
+    console.error('错误位置:', error.message);
+    console.error('原始内容前500字符:', content.substring(0, 500));
+    console.error('原始内容后500字符:', content.substring(Math.max(0, content.length - 500)));
     return getDefaultNames();
   }
 }
