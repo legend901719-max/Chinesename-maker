@@ -13,108 +13,77 @@ export default function Home() {
   const [generatedNames, setGeneratedNames] = useState<any[]>([]);
   const [selectedName, setSelectedName] = useState<any>(null);
   const [favorites, setFavorites] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleGenerateNames = (formData: any) => {
-    const mockNames = [
-      {
-        id: 1,
-        chinese: '美玲',
-        pinyin: 'Měi Líng',
-        meaning: 'Beautiful Bell',
-        characters: [
-          { char: '美', meaning: 'Beautiful, pretty', origin: 'Common in classical poetry' },
-          { char: '玲', meaning: 'Tinkling of jade, delicate sound', origin: 'From ancient jade ornaments' }
-        ],
-        culturalScore: 92,
-        style: 'Modern & Elegant',
-        commonness: 'Very Common',
-        gender: 'Female',
-        fullMeaning: 'A name that evokes the image of delicate beauty and grace, like the tinkling sound of jade bells in the wind.',
-        famousUsers: 'Popular among Chinese women born in 1980s-1990s',
-        fiveElements: { wood: 2, fire: 1, earth: 1, metal: 1, water: 0 },
-        strokeCount: 17,
-        luckyScore: 88
-      },
-      {
-        id: 2,
-        chinese: '思远',
-        pinyin: 'Sī Yuǎn',
-        meaning: 'Thinking Far',
-        characters: [
-          { char: '思', meaning: 'Think, consider, miss', origin: 'From Confucian classics' },
-          { char: '远', meaning: 'Far, distant, profound', origin: 'Common in philosophical texts' }
-        ],
-        culturalScore: 95,
-        style: 'Classical & Profound',
-        commonness: 'Common',
-        gender: 'Unisex',
-        fullMeaning: 'A philosophical name suggesting deep thinking and far-reaching vision. Often associated with wisdom and ambition.',
-        famousUsers: 'Used by scholars and intellectuals throughout Chinese history',
-        fiveElements: { wood: 1, fire: 2, earth: 1, metal: 1, water: 0 },
-        strokeCount: 16,
-        luckyScore: 91
-      },
-      {
-        id: 3,
-        chinese: '晨曦',
-        pinyin: 'Chén Xī',
-        meaning: 'Morning Sunlight',
-        characters: [
-          { char: '晨', meaning: 'Morning, dawn', origin: 'From nature poetry' },
-          { char: '曦', meaning: 'Rays of the sun, sunshine', origin: 'From Tang Dynasty poetry' }
-        ],
-        culturalScore: 89,
-        style: 'Poetic & Natural',
-        commonness: 'Moderately Common',
-        gender: 'Unisex',
-        fullMeaning: 'Evokes the fresh, hopeful imagery of dawn breaking and sunlight spreading across the sky. Symbolizes new beginnings.',
-        famousUsers: 'Popular among modern parents seeking poetic names',
-        fiveElements: { wood: 1, fire: 3, earth: 0, metal: 0, water: 1 },
-        strokeCount: 31,
-        luckyScore: 85
-      },
-      {
-        id: 4,
-        chinese: '雨萱',
-        pinyin: 'Yǔ Xuān',
-        meaning: 'Rain & Day Lily',
-        characters: [
-          { char: '雨', meaning: 'Rain, nourishment', origin: 'Ancient pictograph' },
-          { char: '萱', meaning: 'Day lily flower (forget worries)', origin: 'From Book of Songs (诗经)' }
-        ],
-        culturalScore: 87,
-        style: 'Gentle & Natural',
-        commonness: 'Common',
-        gender: 'Female',
-        fullMeaning: 'Combines the nourishing quality of rain with the day lily, which symbolizes forgetting worries and finding peace.',
-        famousUsers: 'Popular contemporary female name',
-        fiveElements: { wood: 3, fire: 0, earth: 0, metal: 0, water: 2 },
-        strokeCount: 23,
-        luckyScore: 83
-      },
-      {
-        id: 5,
-        chinese: '浩然',
-        pinyin: 'Hào Rán',
-        meaning: 'Vast & Righteous',
-        characters: [
-          { char: '浩', meaning: 'Vast, grand, magnificent', origin: 'From historical texts' },
-          { char: '然', meaning: 'So, thus, naturally', origin: 'Philosophical term' }
-        ],
-        culturalScore: 94,
-        style: 'Grand & Heroic',
-        commonness: 'Very Common',
-        gender: 'Male',
-        fullMeaning: 'Refers to "浩然之气" (noble spirit), a concept from Mencius. Represents righteousness and moral integrity.',
-        famousUsers: 'Famous poet Meng Haoran (孟浩然) from Tang Dynasty',
-        fiveElements: { wood: 2, fire: 1, earth: 1, metal: 0, water: 1 },
-        strokeCount: 23,
-        luckyScore: 90
+  const handleGenerateNames = async (formData: any) => {
+    try {
+      setShowGenerator(true);
+      setIsLoading(true);
+      
+      // 显示加载状态
+      setGeneratedNames([]);
+      
+      const response = await fetch('/api/generate-names', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('生成姓名失败');
       }
-    ];
 
-    setGeneratedNames(mockNames);
-    setShowGenerator(true);
+      const data = await response.json();
+      setGeneratedNames(data.names);
+    } catch (error) {
+      console.error('生成姓名时出错:', error);
+      // 如果API调用失败，使用默认数据
+      const defaultNames = [
+        {
+          id: 1,
+          chinese: '美玲',
+          pinyin: 'Měi Líng',
+          meaning: 'Beautiful Bell',
+          characters: [
+            { char: '美', meaning: 'Beautiful, pretty', origin: 'Common in classical poetry' },
+            { char: '玲', meaning: 'Tinkling of jade, delicate sound', origin: 'From ancient jade ornaments' }
+          ],
+          culturalScore: 92,
+          style: 'Modern & Elegant',
+          commonness: 'Very Common',
+          gender: 'Female',
+          fullMeaning: 'A name that evokes the image of delicate beauty and grace, like the tinkling sound of jade bells in the wind.',
+          famousUsers: 'Popular among Chinese women born in 1980s-1990s',
+          fiveElements: { wood: 2, fire: 1, earth: 1, metal: 1, water: 0 },
+          strokeCount: 17,
+          luckyScore: 88
+        },
+        {
+          id: 2,
+          chinese: '思远',
+          pinyin: 'Sī Yuǎn',
+          meaning: 'Thinking Far',
+          characters: [
+            { char: '思', meaning: 'Think, consider, miss', origin: 'From Confucian classics' },
+            { char: '远', meaning: 'Far, distant, profound', origin: 'Common in philosophical texts' }
+          ],
+          culturalScore: 95,
+          style: 'Classical & Profound',
+          commonness: 'Common',
+          gender: 'Unisex',
+          fullMeaning: 'A philosophical name suggesting deep thinking and far-reaching vision. Often associated with wisdom and ambition.',
+          famousUsers: 'Used by scholars and intellectuals throughout Chinese history',
+          fiveElements: { wood: 1, fire: 2, earth: 1, metal: 1, water: 0 },
+          strokeCount: 16,
+          luckyScore: 91
+        }
+      ];
+      setGeneratedNames(defaultNames);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleNameClick = (name: any) => {
@@ -152,13 +121,21 @@ export default function Home() {
             <p className="text-slate-600">Click on any name to see detailed analysis</p>
           </div>
 
-          <NameResultsDisplay
-            names={generatedNames}
-            onNameClick={handleNameClick}
-            onToggleFavorite={handleToggleFavorite}
-            isFavorite={isFavorite}
-            favorites={favorites}
-          />
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center py-16">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mb-4"></div>
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">正在生成您的中文姓名...</h3>
+              <p className="text-slate-600">AI正在分析您的偏好并生成个性化姓名</p>
+            </div>
+          ) : (
+            <NameResultsDisplay
+              names={generatedNames}
+              onNameClick={handleNameClick}
+              onToggleFavorite={handleToggleFavorite}
+              isFavorite={isFavorite}
+              favorites={favorites}
+            />
+          )}
 
           {selectedName && (
             <NameDetailModal

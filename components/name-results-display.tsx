@@ -65,6 +65,19 @@ export function NameResultsDisplay({
             </CardHeader>
 
             <CardContent className="space-y-4">
+              {name.bilingualExplanation && (
+                <div className="space-y-2">
+                  <div className="bg-gradient-to-r from-red-50 to-amber-50 p-3 rounded-lg border-l-4 border-red-500">
+                    <h5 className="font-semibold text-slate-900 mb-1 text-xs">中文解释</h5>
+                    <p className="text-slate-700 text-xs leading-relaxed line-clamp-2">{name.bilingualExplanation.chinese}</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border-l-4 border-blue-500">
+                    <h5 className="font-semibold text-slate-900 mb-1 text-xs">English</h5>
+                    <p className="text-slate-700 text-xs leading-relaxed line-clamp-2">{name.bilingualExplanation.english}</p>
+                  </div>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <span className="text-sm text-slate-600">Cultural Score</span>
                 <div className="flex items-center gap-2">

@@ -86,9 +86,22 @@ export function NameDetailModal({
           <div>
             <h3 className="text-xl font-semibold mb-3 flex items-center gap-2 text-slate-900">
               <BookOpen className="w-5 h-5 text-red-600" />
-              Full Meaning
+              Full Meaning / 完整含义
             </h3>
-            <p className="text-slate-700 leading-relaxed">{name.fullMeaning}</p>
+            {name.bilingualFullMeaning ? (
+              <div className="space-y-4">
+                <div className="bg-gradient-to-r from-red-50 to-amber-50 p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 className="font-semibold text-slate-900 mb-2">中文解释</h4>
+                  <p className="text-slate-700 leading-relaxed">{name.bilingualFullMeaning.chinese}</p>
+                </div>
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 className="font-semibold text-slate-900 mb-2">English Explanation</h4>
+                  <p className="text-slate-700 leading-relaxed">{name.bilingualFullMeaning.english}</p>
+                </div>
+              </div>
+            ) : (
+              <p className="text-slate-700 leading-relaxed">{name.fullMeaning}</p>
+            )}
           </div>
 
           <Separator />
@@ -96,7 +109,7 @@ export function NameDetailModal({
           <div>
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-900">
               <Sparkles className="w-5 h-5 text-amber-600" />
-              Character Analysis
+              Character Analysis / 字符分析
             </h3>
             <div className="space-y-4">
               {name.characters.map((char: any, index: number) => (
@@ -106,7 +119,7 @@ export function NameDetailModal({
                       <div className="text-5xl font-bold text-slate-900 flex-shrink-0">
                         {char.char}
                       </div>
-                      <div className="flex-1 space-y-2">
+                      <div className="flex-1 space-y-3">
                         <div>
                           <span className="font-semibold text-slate-900">Meaning: </span>
                           <span className="text-slate-700">{char.meaning}</span>
@@ -115,6 +128,18 @@ export function NameDetailModal({
                           <span className="font-semibold text-slate-900">Origin: </span>
                           <span className="text-slate-600 italic">{char.origin}</span>
                         </div>
+                        {char.bilingualExplanation && (
+                          <div className="space-y-3 mt-4">
+                            <div className="bg-gradient-to-r from-red-50 to-amber-50 p-3 rounded-lg border-l-4 border-red-500">
+                              <h5 className="font-semibold text-slate-900 mb-1 text-sm">中文解释</h5>
+                              <p className="text-slate-700 text-sm leading-relaxed">{char.bilingualExplanation.chinese}</p>
+                            </div>
+                            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border-l-4 border-blue-500">
+                              <h5 className="font-semibold text-slate-900 mb-1 text-sm">English Explanation</h5>
+                              <p className="text-slate-700 text-sm leading-relaxed">{char.bilingualExplanation.english}</p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -194,12 +219,25 @@ export function NameDetailModal({
           <Separator />
 
           <div>
-            <h3 className="text-xl font-semibold mb-3 text-slate-900">Famous Users & Popularity</h3>
-            <Card className="bg-slate-50">
-              <CardContent className="pt-6">
-                <p className="text-slate-700">{name.famousUsers}</p>
-              </CardContent>
-            </Card>
+            <h3 className="text-xl font-semibold mb-3 text-slate-900">Famous Users & Popularity / 历史名人</h3>
+            {name.bilingualFamousUsers ? (
+              <div className="space-y-4">
+                <div className="bg-gradient-to-r from-red-50 to-amber-50 p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 className="font-semibold text-slate-900 mb-2">中文说明</h4>
+                  <p className="text-slate-700 leading-relaxed">{name.bilingualFamousUsers.chinese}</p>
+                </div>
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 className="font-semibold text-slate-900 mb-2">English Description</h4>
+                  <p className="text-slate-700 leading-relaxed">{name.bilingualFamousUsers.english}</p>
+                </div>
+              </div>
+            ) : (
+              <Card className="bg-slate-50">
+                <CardContent className="pt-6">
+                  <p className="text-slate-700">{name.famousUsers}</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           <div className="flex gap-3 pt-4">
