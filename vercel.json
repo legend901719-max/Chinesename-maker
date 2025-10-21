@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "app/api/generate-names/route.ts": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "DEEPSEEK_API_KEY": "9c7778cd-c2c1-4679-918e-7852bf602fda"
+  }
+}

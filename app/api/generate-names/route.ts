@@ -71,19 +71,13 @@ function buildPrompt(englishName: string, gender: string, nationality: string, m
       "chinese": "中文姓名",
       "pinyin": "拼音标注",
       "meaning": "英文含义",
-      "bilingualExplanation": {
-        "chinese": "中文详细解释，包含文化背景、寓意和传统意义",
-        "english": "English detailed explanation including cultural background, symbolism and traditional meaning"
-      },
+      "explanation": "English detailed explanation including cultural background, symbolism and traditional meaning",
       "characters": [
         {
           "char": "字",
           "meaning": "字义解释",
           "origin": "字源出处",
-          "bilingualExplanation": {
-            "chinese": "该字的中文详细解释",
-            "english": "English explanation of this character"
-          }
+          "explanation": "English explanation of this character"
         }
       ],
       "culturalScore": 85,
@@ -91,15 +85,9 @@ function buildPrompt(englishName: string, gender: string, nationality: string, m
       "commonness": "常见程度",
       "gender": "性别倾向",
       "fullMeaning": "完整含义解释",
-      "bilingualFullMeaning": {
-        "chinese": "姓名的完整中文含义解释，包含文化内涵和传统寓意",
-        "english": "Complete English explanation of the name's meaning, including cultural connotations and traditional symbolism"
-      },
+      "fullExplanation": "Complete English explanation of the name's meaning, including cultural connotations and traditional symbolism",
       "famousUsers": "历史名人或使用情况",
-      "bilingualFamousUsers": {
-        "chinese": "中文历史名人或使用情况说明",
-        "english": "English description of famous users or historical usage"
-      },
+      "famousUsersExplanation": "English description of famous users or historical usage",
       "fiveElements": {
         "wood": 1,
         "fire": 1,
@@ -120,10 +108,9 @@ function buildPrompt(englishName: string, gender: string, nationality: string, m
 4. 确保拼音标注准确
 5. 提供真实的历史文化背景
 6. 风格要与用户偏好匹配
-7. 为每个字段提供中英文双语解释
-8. 中文解释要体现深厚的文化内涵
-9. 英文解释要准确传达中文含义
-10. 返回完整的JSON格式，不要包含其他文字`;
+7. 只提供英文解释，不需要中文解释
+8. 英文解释要准确传达中文含义和文化内涵
+9. 返回完整的JSON格式，不要包含其他文字`;
 
   return prompt;
 }
@@ -162,28 +149,19 @@ function getDefaultNames() {
       chinese: '美玲',
       pinyin: 'Měi Líng',
       meaning: 'Beautiful Bell',
-      bilingualExplanation: {
-        chinese: '美玲这个名字体现了中华文化中对女性美的传统认知。"美"字代表美丽、优雅，在中国古典文学中常用来形容女性的内在和外在美。"玲"字源自古代玉器，象征着清脆悦耳的声音，寓意着如玉石般纯洁美好的品格。这个名字承载着对女性温柔、美丽、聪慧品质的期望。',
-        english: 'The name "美玲" embodies traditional Chinese cultural appreciation for feminine beauty. "美" represents beauty and elegance, frequently used in classical Chinese literature to describe both inner and outer beauty. "玲" originates from ancient jade ornaments, symbolizing clear, melodious sounds and representing pure, noble character like precious jade. This name carries expectations of gentleness, beauty, and wisdom.'
-      },
+      explanation: 'The name "美玲" embodies traditional Chinese cultural appreciation for feminine beauty. "美" represents beauty and elegance, frequently used in classical Chinese literature to describe both inner and outer beauty. "玲" originates from ancient jade ornaments, symbolizing clear, melodious sounds and representing pure, noble character like precious jade. This name carries expectations of gentleness, beauty, and wisdom.',
       characters: [
         { 
           char: '美', 
           meaning: 'Beautiful, pretty', 
           origin: 'Common in classical poetry',
-          bilingualExplanation: {
-            chinese: '"美"字在中华文化中具有深厚内涵，不仅指外在的美丽，更强调内在的品德之美。在古代诗词中，"美"常与"德"并提，体现了中华文化对内外兼修的追求。',
-            english: 'The character "美" carries profound cultural significance in Chinese tradition, referring not only to physical beauty but also emphasizing inner moral beauty. In classical poetry, "美" is often paired with "德" (virtue), reflecting the Chinese cultural pursuit of both inner and outer cultivation.'
-          }
+          explanation: 'The character "美" carries profound cultural significance in Chinese tradition, referring not only to physical beauty but also emphasizing inner moral beauty. In classical poetry, "美" is often paired with "德" (virtue), reflecting the Chinese cultural pursuit of both inner and outer cultivation.'
         },
         { 
           char: '玲', 
           meaning: 'Tinkling of jade, delicate sound', 
           origin: 'From ancient jade ornaments',
-          bilingualExplanation: {
-            chinese: '"玲"字源于古代玉器的清脆声响，象征着纯洁、高贵和美好的品格。在古代，"玲"常用来形容女子声音的悦耳动听，体现了对女性温柔特质的赞美。',
-            english: 'The character "玲" originates from the clear, tinkling sound of ancient jade ornaments, symbolizing purity, nobility, and virtuous character. In ancient times, "玲" was often used to describe the melodious voice of women, reflecting admiration for feminine gentleness.'
-          }
+          explanation: 'The character "玲" originates from the clear, tinkling sound of ancient jade ornaments, symbolizing purity, nobility, and virtuous character. In ancient times, "玲" was often used to describe the melodious voice of women, reflecting admiration for feminine gentleness.'
         }
       ],
       culturalScore: 92,
@@ -191,15 +169,9 @@ function getDefaultNames() {
       commonness: 'Very Common',
       gender: 'Female',
       fullMeaning: 'A name that evokes the image of delicate beauty and grace, like the tinkling sound of jade bells in the wind.',
-      bilingualFullMeaning: {
-        chinese: '美玲这个名字如春风拂面，寓意着如玉石般纯洁美好的品格。它承载着中华文化对女性美的传统认知，既体现了外在的优雅美丽，更强调内在的品德修养。这个名字适合温柔、聪慧、有教养的女性，象征着美好的未来和幸福的人生。',
-        english: 'The name "美玲" is like a gentle spring breeze, symbolizing pure and noble character like precious jade. It carries traditional Chinese cultural appreciation for feminine beauty, embodying both external elegance and inner moral cultivation. This name suits gentle, intelligent, and well-educated women, symbolizing a bright future and happy life.'
-      },
+      fullExplanation: 'The name "美玲" is like a gentle spring breeze, symbolizing pure and noble character like precious jade. It carries traditional Chinese cultural appreciation for feminine beauty, embodying both external elegance and inner moral cultivation. This name suits gentle, intelligent, and well-educated women, symbolizing a bright future and happy life.',
       famousUsers: 'Popular among Chinese women born in 1980s-1990s',
-      bilingualFamousUsers: {
-        chinese: '美玲这个名字在1980-1990年代出生的中国女性中非常流行，体现了那个时代对传统美德的重视。许多知名女性都使用这个名字，她们在各自的领域都取得了卓越成就。',
-        english: 'The name "美玲" was very popular among Chinese women born in the 1980s-1990s, reflecting that era\'s emphasis on traditional virtues. Many well-known women have used this name, achieving excellence in their respective fields.'
-      },
+      famousUsersExplanation: 'The name "美玲" was very popular among Chinese women born in the 1980s-1990s, reflecting that era\'s emphasis on traditional virtues. Many well-known women have used this name, achieving excellence in their respective fields.',
       fiveElements: { wood: 2, fire: 1, earth: 1, metal: 1, water: 0 },
       strokeCount: 17,
       luckyScore: 88
@@ -209,28 +181,19 @@ function getDefaultNames() {
       chinese: '思远',
       pinyin: 'Sī Yuǎn',
       meaning: 'Thinking Far',
-      bilingualExplanation: {
-        chinese: '思远这个名字体现了中华文化中"修身、齐家、治国、平天下"的儒家思想。"思"代表深思熟虑、智慧思考，体现了对学问和品德的追求；"远"象征着远大的志向和深邃的思想，寓意着要有长远的眼光和博大的胸怀。',
-        english: 'The name "思远" embodies the Confucian philosophy of "cultivating oneself, managing family, governing state, and bringing peace to the world." "思" represents deep thinking and wisdom, reflecting the pursuit of knowledge and virtue. "远" symbolizes lofty aspirations and profound thoughts, suggesting long-term vision and broad-mindedness.'
-      },
+      explanation: 'The name "思远" embodies the Confucian philosophy of "cultivating oneself, managing family, governing state, and bringing peace to the world." "思" represents deep thinking and wisdom, reflecting the pursuit of knowledge and virtue. "远" symbolizes lofty aspirations and profound thoughts, suggesting long-term vision and broad-mindedness.',
       characters: [
         { 
           char: '思', 
           meaning: 'Think, consider, miss', 
           origin: 'From Confucian classics',
-          bilingualExplanation: {
-            chinese: '"思"字在儒家经典中具有重要地位，强调理性思考和道德修养。孔子曾说"学而不思则罔"，体现了思考在学习和成长中的重要作用。',
-            english: 'The character "思" holds an important position in Confucian classics, emphasizing rational thinking and moral cultivation. Confucius said "Learning without thinking leads to confusion," reflecting the crucial role of thinking in learning and growth.'
-          }
+          explanation: 'The character "思" holds an important position in Confucian classics, emphasizing rational thinking and moral cultivation. Confucius said "Learning without thinking leads to confusion," reflecting the crucial role of thinking in learning and growth.'
         },
         { 
           char: '远', 
           meaning: 'Far, distant, profound', 
           origin: 'Common in philosophical texts',
-          bilingualExplanation: {
-            chinese: '"远"字在哲学文本中常用来表达深邃的思想和远大的志向。它不仅仅指空间上的距离，更强调思想上的深度和广度，体现了中华文化对远大理想的追求。',
-            english: 'The character "远" is commonly used in philosophical texts to express profound thoughts and lofty aspirations. It refers not only to spatial distance but emphasizes depth and breadth of thought, reflecting Chinese culture\'s pursuit of grand ideals.'
-          }
+          explanation: 'The character "远" is commonly used in philosophical texts to express profound thoughts and lofty aspirations. It refers not only to spatial distance but emphasizes depth and breadth of thought, reflecting Chinese culture\'s pursuit of grand ideals.'
         }
       ],
       culturalScore: 95,
@@ -238,15 +201,9 @@ function getDefaultNames() {
       commonness: 'Common',
       gender: 'Unisex',
       fullMeaning: 'A philosophical name suggesting deep thinking and far-reaching vision. Often associated with wisdom and ambition.',
-      bilingualFullMeaning: {
-        chinese: '思远这个名字蕴含着深厚的哲学内涵，体现了中华文化对智慧和品德的重视。它适合有思想深度、有远大抱负的人，象征着在人生道路上不断思考、不断前进的精神。',
-        english: 'The name "思远" contains profound philosophical connotations, reflecting Chinese culture\'s emphasis on wisdom and virtue. It suits people with intellectual depth and lofty aspirations, symbolizing the spirit of continuous thinking and progress in life.'
-      },
+      fullExplanation: 'The name "思远" contains profound philosophical connotations, reflecting Chinese culture\'s emphasis on wisdom and virtue. It suits people with intellectual depth and lofty aspirations, symbolizing the spirit of continuous thinking and progress in life.',
       famousUsers: 'Used by scholars and intellectuals throughout Chinese history',
-      bilingualFamousUsers: {
-        chinese: '思远这个名字在中国历史上被许多学者和知识分子使用，体现了中华文化对学问和品德的重视。这些人物在各自的领域都取得了卓越成就，为中华文化的发展做出了重要贡献。',
-        english: 'The name "思远" has been used by many scholars and intellectuals throughout Chinese history, reflecting Chinese culture\'s emphasis on learning and virtue. These figures achieved excellence in their respective fields, making significant contributions to the development of Chinese culture.'
-      },
+      famousUsersExplanation: 'The name "思远" has been used by many scholars and intellectuals throughout Chinese history, reflecting Chinese culture\'s emphasis on learning and virtue. These figures achieved excellence in their respective fields, making significant contributions to the development of Chinese culture.',
       fiveElements: { wood: 1, fire: 2, earth: 1, metal: 1, water: 0 },
       strokeCount: 16,
       luckyScore: 91

@@ -86,18 +86,11 @@ export function NameDetailModal({
           <div>
             <h3 className="text-xl font-semibold mb-3 flex items-center gap-2 text-slate-900">
               <BookOpen className="w-5 h-5 text-red-600" />
-              Full Meaning / 完整含义
+              Full Meaning
             </h3>
-            {name.bilingualFullMeaning ? (
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-red-50 to-amber-50 p-4 rounded-lg border-l-4 border-red-500">
-                  <h4 className="font-semibold text-slate-900 mb-2">中文解释</h4>
-                  <p className="text-slate-700 leading-relaxed">{name.bilingualFullMeaning.chinese}</p>
-                </div>
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
-                  <h4 className="font-semibold text-slate-900 mb-2">English Explanation</h4>
-                  <p className="text-slate-700 leading-relaxed">{name.bilingualFullMeaning.english}</p>
-                </div>
+            {name.fullExplanation ? (
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
+                <p className="text-slate-700 leading-relaxed">{name.fullExplanation}</p>
               </div>
             ) : (
               <p className="text-slate-700 leading-relaxed">{name.fullMeaning}</p>
@@ -109,7 +102,7 @@ export function NameDetailModal({
           <div>
             <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-900">
               <Sparkles className="w-5 h-5 text-amber-600" />
-              Character Analysis / 字符分析
+              Character Analysis
             </h3>
             <div className="space-y-4">
               {name.characters.map((char: any, index: number) => (
@@ -128,15 +121,10 @@ export function NameDetailModal({
                           <span className="font-semibold text-slate-900">Origin: </span>
                           <span className="text-slate-600 italic">{char.origin}</span>
                         </div>
-                        {char.bilingualExplanation && (
-                          <div className="space-y-3 mt-4">
-                            <div className="bg-gradient-to-r from-red-50 to-amber-50 p-3 rounded-lg border-l-4 border-red-500">
-                              <h5 className="font-semibold text-slate-900 mb-1 text-sm">中文解释</h5>
-                              <p className="text-slate-700 text-sm leading-relaxed">{char.bilingualExplanation.chinese}</p>
-                            </div>
+                        {char.explanation && (
+                          <div className="mt-4">
                             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-3 rounded-lg border-l-4 border-blue-500">
-                              <h5 className="font-semibold text-slate-900 mb-1 text-sm">English Explanation</h5>
-                              <p className="text-slate-700 text-sm leading-relaxed">{char.bilingualExplanation.english}</p>
+                              <p className="text-slate-700 text-sm leading-relaxed">{char.explanation}</p>
                             </div>
                           </div>
                         )}
@@ -219,17 +207,10 @@ export function NameDetailModal({
           <Separator />
 
           <div>
-            <h3 className="text-xl font-semibold mb-3 text-slate-900">Famous Users & Popularity / 历史名人</h3>
-            {name.bilingualFamousUsers ? (
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-red-50 to-amber-50 p-4 rounded-lg border-l-4 border-red-500">
-                  <h4 className="font-semibold text-slate-900 mb-2">中文说明</h4>
-                  <p className="text-slate-700 leading-relaxed">{name.bilingualFamousUsers.chinese}</p>
-                </div>
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
-                  <h4 className="font-semibold text-slate-900 mb-2">English Description</h4>
-                  <p className="text-slate-700 leading-relaxed">{name.bilingualFamousUsers.english}</p>
-                </div>
+            <h3 className="text-xl font-semibold mb-3 text-slate-900">Famous Users & Popularity</h3>
+            {name.famousUsersExplanation ? (
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border-l-4 border-blue-500">
+                <p className="text-slate-700 leading-relaxed">{name.famousUsersExplanation}</p>
               </div>
             ) : (
               <Card className="bg-slate-50">
