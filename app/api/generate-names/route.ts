@@ -9,11 +9,14 @@ export async function POST(request: NextRequest) {
     const prompt = buildPrompt(englishName, gender, nationality, meanings, style);
     
     // 调用DeepSeek V3 API
+    const apiKey = process.env.DEEPSEEK_API_KEY || '9c7778cd-c2c1-4679-918e-7852bf602fda';
+    console.log('使用API密钥:', apiKey.substring(0, 10) + '...');
+    
     const response = await fetch('https://ark.cn-beijing.volces.com/api/v3/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9c7778cd-c2c1-4679-918e-7852bf602fda'
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
         model: 'deepseek-v3-1-terminus',
@@ -33,7 +36,9 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      throw new Error(`API请求失败: ${response.status}`);
+      const errorText = await response.text();
+      console.error('DeepSeek API错误:', response.status, errorText);
+      throw new Error(`API请求失败: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
