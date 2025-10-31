@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Sparkles, Users, BookOpen, Heart, Star, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,6 +14,7 @@ export default function Home() {
   const [selectedName, setSelectedName] = useState<any>(null);
   const [favorites, setFavorites] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
   const handleGenerateNames = async (formData: any) => {
     try {
@@ -105,6 +106,13 @@ export default function Home() {
     return favorites.some(f => f.id === nameId);
   };
 
+  const scrollToForm = () => {
+    formRef.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
   if (showGenerator) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
@@ -154,33 +162,46 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="bg-gradient-to-br from-red-50 via-amber-50 to-yellow-50">
-        <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="container mx-auto px-4 py-6 md:py-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-full mb-6 text-sm font-medium">
-              <Sparkles className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1.5 rounded-full mb-3 text-xs md:text-sm font-medium">
+              <Sparkles className="w-3 h-3 md:w-4 md:h-4" />
               Discover Your Chinese Identity
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-slate-900">
+            <h1 className="text-3xl md:text-5xl font-bold mb-3 text-slate-900">
               Find Your Perfect
-              <span className="block text-red-600 mt-2">Chinese Name</span>
+              <span className="block text-red-600 mt-1">Chinese Name</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm md:text-base text-slate-600 mb-4 max-w-2xl mx-auto leading-relaxed">
               Generate meaningful Chinese names with cultural insights, pronunciation guides, and personalized recommendations
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
               <Button
                 size="lg"
-                onClick={() => setShowGenerator(true)}
-                className="bg-red-600 hover:bg-red-700 text-white px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all"
+                onClick={scrollToForm}
+                className="bg-red-600 hover:bg-red-700 text-white px-6 py-4 text-base md:text-lg rounded-xl shadow-lg hover:shadow-xl transition-all"
               >
-                <Sparkles className="w-5 h-5 mr-2" />
+                <Sparkles className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                 Generate My Name
               </Button>
             </div>
+          </div>
+        </div>
+      </div>
 
+      <div ref={formRef} className="bg-gradient-to-b from-white via-red-50/30 to-amber-50/30 py-8 md:py-12 scroll-mt-8">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <NameGeneratorForm onGenerate={handleGenerateNames} />
+          </div>
+        </div>
+      </div>
+      <div className="bg-gradient-to-br from-red-50 via-amber-50 to-yellow-50">
+        <div className="container mx-auto px-4 py-16">
+          <div className="max-w-4xl mx-auto text-center">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
               <div className="bg-white/60 backdrop-blur-sm p-4 rounded-lg">
                 <div className="text-3xl font-bold text-red-600">500K+</div>
@@ -339,10 +360,6 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
-        <NameGeneratorForm onGenerate={handleGenerateNames} />
-      </div>
-
       <div className="bg-gradient-to-br from-red-600 to-orange-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Discover Your Chinese Name?</h2>
@@ -351,7 +368,7 @@ export default function Home() {
           </p>
           <Button
             size="lg"
-            onClick={() => setShowGenerator(true)}
+            onClick={scrollToForm}
             className="bg-white text-red-600 hover:bg-red-50 px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all"
           >
             <Sparkles className="w-5 h-5 mr-2" />
