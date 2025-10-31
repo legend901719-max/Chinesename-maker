@@ -181,7 +181,7 @@ function parseGeneratedNames(content: string): any[] {
     return getDefaultNames();
   } catch (error) {
     console.error('解析生成的姓名时出错:', error);
-    console.error('错误位置:', error.message);
+    console.error('错误位置:', error instanceof Error ? error.message : 'Unknown error');
     console.error('原始内容前500字符:', content.substring(0, 500));
     console.error('原始内容后500字符:', content.substring(Math.max(0, content.length - 500)));
     return getDefaultNames();
