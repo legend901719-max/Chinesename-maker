@@ -9,8 +9,14 @@ export async function POST(request: NextRequest) {
     const prompt = buildPrompt(englishName, gender, nationality, meanings, style);
     
     // 调用DeepSeek V3 API
-    const apiKey = process.env.DEEPSEEK_API_KEY || '9c7778cd-c2c1-4679-918e-7852bf602fda';
-    console.log('使用API密钥:', apiKey.substring(0, 10) + '...');
+    const apiKey = process.env.DEEPSEEK_API_KEY;
+    if (!apiKey) {
+      console.error('API密钥未配置');
+      return NextResponse.json(
+        { error: 'API配置错误，请联系管理员' },
+        { status: 500 }
+      );
+    }
     
     const response = await fetch('https://ark.cn-beijing.volces.com/api/v3/chat/completions', {
       method: 'POST',

@@ -2,13 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const apiKey = process.env.DEEPSEEK_API_KEY || '9c7778cd-c2c1-4679-918e-7852bf602fda';
+    const apiKey = process.env.DEEPSEEK_API_KEY;
     
     return NextResponse.json({
       status: 'success',
       message: 'API测试成功',
       hasApiKey: !!apiKey,
-      apiKeyPrefix: apiKey.substring(0, 10) + '...',
+      // 不暴露API密钥的任何信息
       timestamp: new Date().toISOString()
     });
   } catch (error) {
